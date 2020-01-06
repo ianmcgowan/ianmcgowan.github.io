@@ -11,8 +11,8 @@ email: ian@simbian.org
 description: "A blog about using, exploring and programming Infolease"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://yourdomain.com" # the base hostname & protocol for your site
-twitter_username: ianmcgowan
-github_username:  ianmcgowan
+linkedin_username: https://www.linkedin.com/in/ianmcgowan/
+github_username: ianmcgowan
 
 # Build settings
 markdown: kramdown

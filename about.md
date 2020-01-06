@@ -4,12 +4,8 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+Welcome to the Simbian Blog
 
-You can find the source code for the Jekyll new theme at:
-{% include icon-github.html username="jglovier" %} /
-[jekyll-new](https://github.com/jglovier/jekyll-new)
+This blog is designed as a source of tips, tricks and general information for Infolease users, analysts and programmers.
 
-You can find the source code for Jekyll at
-{% include icon-github.html username="jekyll" %} /
-[jekyll](https://github.com/jekyll/jekyll)
+Please contact ian@simbian.org or visit [www.simbian.org](http://www.simbian.org) with any suggestions, corrections or requests.
