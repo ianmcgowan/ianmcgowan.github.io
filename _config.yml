@@ -8,8 +8,7 @@
 # Site settings
 title: Simbian Consulting Blog
 email: ian@simbian.org
-description: > # this means to ignore newlines until "baseurl:"
-A blog about using, exploring and programming Infolease
+description: "A blog about using, exploring and programming Infolease"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://yourdomain.com" # the base hostname & protocol for your site
 twitter_username: ianmcgowan
