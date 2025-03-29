@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>http://localhost:4000/general/2020/01/06/welcome-to-jekyll.html</loc>
+<lastmod>2020-01-06T13:06:51-08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/technical/uci/2020/01/08/UCI-troubleshooting.html</loc>
+<lastmod>2020-01-08T14:12:00-08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/pick%20basic/2025/03/29/parsing-json-from-pick-basic.html</loc>
+<lastmod>2025-03-29T00:00:00-07:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/twitter.html</loc>
+<lastmod>2025-03-29T15:35:33-07:00</lastmod>
+</url>
+</urlset>

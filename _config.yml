@@ -1,18 +1,31 @@
 # Welcome to Jekyll!
 #
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'jekyll serve'. If you change this file, please restart the server process.
+title: "Simbian Consulting Blog"
+subtitle: "InfoLease, Unidata/PICK Basic, and Tech Tips"
+name: "Ian McGowan"
+description: "A blog about using, exploring and programming InfoLease and legacy systems"
+url: "https://ianmcgowan.github.io"
+repository: "ianmcgowan/ianmcgowan.github.io"
 
-# Site settings
-title: Simbian Consulting Blog
-email: ian@simbian.org
-description: "A blog about using, exploring and programming Infolease"
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://yourdomain.com" # the base hostname & protocol for your site
-linkedin_username: https://www.linkedin.com/in/ianmcgowan/
-github_username: ianmcgowan
+# Site Author
+author:
+  name: "Ian McGowan"
+  avatar: "/assets/images/profile.jpg"  # Add a photo later
+  bio: "Consultant specializing in InfoLease and Unidata/PICK Basic systems"
+  email: "ian@simbian.org"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/ianmcgowan"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://linkedin.com/in/ianmcgowan"  # Update with your profile
 
-# Build settings
-markdown: kramdown
+remote_theme: "mmistakes/minimal-mistakes@4.24.0"
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-include-cache
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-sitemap

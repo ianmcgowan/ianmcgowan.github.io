@@ -1,0 +1,11 @@
+main:
+  - title: "About"
+    url: /about/
+  - title: "InfoLease"
+    url: /categories/infolease/
+  - title: "PICK Basic"
+    url: /categories/pick-basic/
+  - title: "Tech Tips"
+    url: /categories/tech-tips/
+  - title: "Services"
+    url: /services/

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Simbian Consulting Blog</title>
+    <description>A blog about using, exploring and programming InfoLease and legacy systems</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 29 Mar 2025 16:04:23 -0700</pubDate>
+    <lastBuildDate>Sat, 29 Mar 2025 16:04:23 -0700</lastBuildDate>
+    <generator>Jekyll v3.10.0</generator>
+    
+      <item>
+        <title>Parsing JSON data from PICK Basic</title>
+        <description>&lt;p&gt;Content here…&lt;/p&gt;
+</description>
+        <pubDate>Sat, 29 Mar 2025 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/pick%20basic/2025/03/29/parsing-json-from-pick-basic.html</link>
+        <guid isPermaLink="true">http://localhost:4000/pick%20basic/2025/03/29/parsing-json-from-pick-basic.html</guid>
+        
+        <category>json</category>
+        
+        <category>integration</category>
+        
+        <category>tutorial</category>
+        
+        
+        <category>PICK Basic</category>
+        
+      </item>
+    
+      <item>
+        <title>UCI Troubleshooting</title>
+        <description>&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;The Universal Contract Interface (UCI) is an Infolease module that allows contracts to be booked into Infolease from a simple flat-file format.&lt;/p&gt;
+
+&lt;h2 id=&quot;sample-format&quot;&gt;Sample Format&lt;/h2&gt;
+
+&lt;h2 id=&quot;error-conditionslogs&quot;&gt;Error conditions/logs&lt;/h2&gt;
+
+&lt;h2 id=&quot;reviewing-flat-data&quot;&gt;Reviewing Flat Data&lt;/h2&gt;
+</description>
+        <pubDate>Wed, 08 Jan 2020 14:12:00 -0800</pubDate>
+        <link>http://localhost:4000/technical/uci/2020/01/08/UCI-troubleshooting.html</link>
+        <guid isPermaLink="true">http://localhost:4000/technical/uci/2020/01/08/UCI-troubleshooting.html</guid>
+        
+        
+        <category>technical</category>
+        
+        <category>UCI</category>
+        
+      </item>
+    
+      <item>
+        <title>Welcome to the Simbian Consulting Blog</title>
+        <description>&lt;p&gt;Welcome to the Simbian Blog&lt;/p&gt;
+
+&lt;p&gt;This blog is designed as a source of tips, tricks and general information for Infolease users, analysts and programmers.&lt;/p&gt;
+
+&lt;p&gt;Please contact ian@simbian.org with any suggestions, corrections or requests.&lt;/p&gt;
+
+&lt;p&gt;Ideas for future posts include:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;UCI Troubleshooting&lt;/li&gt;
+  &lt;li&gt;Dealing with multivalues in UATB’s&lt;/li&gt;
+  &lt;li&gt;Exporting InfoTrieves directly to tab or pipe delimited flat files&lt;/li&gt;
+  &lt;li&gt;Exporting data from IL9/Unidata - various approaches with pros and cons&lt;/li&gt;
+  &lt;li&gt;Backing up/restoring an account, copying across the network&lt;/li&gt;
+  &lt;li&gt;RTF/PDF Printers&lt;/li&gt;
+  &lt;li&gt;Code guidelines/best practices&lt;/li&gt;
+  &lt;li&gt;An improved TCL stack - better auditing, editing and programmer short-cuts&lt;/li&gt;
+  &lt;li&gt;Using VSCode to edit Pick Basic&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 06 Jan 2020 13:06:51 -0800</pubDate>
+        <link>http://localhost:4000/general/2020/01/06/welcome-to-jekyll.html</link>
+        <guid isPermaLink="true">http://localhost:4000/general/2020/01/06/welcome-to-jekyll.html</guid>
+        
+        
+        <category>general</category>
+        
+      </item>
+    
+  </channel>
+</rss>
