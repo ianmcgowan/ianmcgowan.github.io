@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Parsing JSON data from PICK Basic</title>
-  <meta name="description" content="Content here…">
+  <meta name="description" content="Parsing JSON Data in PICK Basic: An Effective Approach">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://localhost:4000/pick%20basic/2025/03/29/parsing-json-from-pick-basic.html">
@@ -70,7 +70,164 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>Content here…</p>
+    <h1 id="parsing-json-data-in-pick-basic-an-effective-approach">Parsing JSON Data in PICK Basic: An Effective Approach</h1>
+
+<p><img src="/assets/images/JSON_Hero.png" alt="JSON Hero" />
+<a href="https://github.com/ianmcgowan/SIMBIAN.BP/tree/main">Link to the code on GitHub</a></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>JSON (JavaScript Object Notation) has become standard for exchanging data between web services, APIs, and configuration files. It
+replaced XML in most modern applications because it’s simpler, more readable, and easier for developers to use. This shift
+highlights a key lesson: developer productivity often beats “better” technology.</p>
+
+<p>A quick example makes the difference clear. Here’s data represented in JSON:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Countries"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USA"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Capital"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Washington, D.C."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Population"</span><span class="p">:</span><span class="w"> </span><span class="mi">331000000</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Languages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"English"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Spanish"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Canada"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Capital"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ottawa"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Population"</span><span class="p">:</span><span class="w"> </span><span class="mi">38000000</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Languages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"English"</span><span class="p">,</span><span class="w"> </span><span class="s2">"French"</span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>and the equivalent XML:</p>
+
+<pre><code class="language-XML">&lt;Countries&gt;
+  &lt;Country&gt;
+    &lt;Name&gt;USA&lt;/Name&gt;
+    &lt;Capital&gt;Washington, D.C.&lt;/Capital&gt;
+    &lt;Population&gt;331000000&lt;/Population&gt;
+    &lt;Languages&gt;
+      &lt;Language&gt;English&lt;/Language&gt;
+      &lt;Language&gt;Spanish&lt;/Language&gt;
+    &lt;/Languages&gt;
+  &lt;/Country&gt;
+  &lt;Country&gt;
+    &lt;Name&gt;Canada&lt;/Name&gt;
+    &lt;Capital&gt;Ottawa&lt;/Capital&gt;
+    &lt;Population&gt;38000000&lt;/Population&gt;
+    &lt;Languages&gt;
+      &lt;Language&gt;English&lt;/Language&gt;
+      &lt;Language&gt;French&lt;/Language&gt;
+    &lt;/Languages&gt;
+  &lt;/Country&gt;
+&lt;/Countries&gt;
+</code></pre>
+
+<p>JSON’s structure — objects with key-value pairs and arrays — makes nested data straightforward. It lacks XML’s richness and
+extensibility, but the trade-off is worth it for simplicity.</p>
+
+<p>Multivalued database systems like PICK store data as flat, delimited records — not hierarchies. Without native pointers or objects,
+parsing JSON directly can be tricky. Some modern MV systems like jBASE and OpenQM offer built-in support for objects, but most
+traditional PICK environments don’t.</p>
+
+<p>So how can PICK developers handle JSON effectively? In this post, I’ll review some existing approaches, discuss the challenges, and
+share a practical method that works smoothly in PICK Basic.</p>
+
+<h2 id="common-json-parsing-techniques">Common JSON Parsing Techniques</h2>
+
+<p>In mainstream languages like JavaScript, Python, and Java, parsing JSON is straightforward. JavaScript handles JSON natively—just
+use JSON.parse() to quickly convert text into an object. Python’s json module does the heavy lifting, turning JSON strings into
+dictionaries and lists with minimal effort. Java developers typically use libraries such as Jackson or Gson, which map JSON directly
+into objects or classes. These languages offer convenient ways to easily navigate and manipulate JSON data.</p>
+
+<p>When you’re scripting or working from the command line, tools like <a href="https://jqlang.org/">jq</a> make JSON parsing quick and painless.
+<code class="language-plaintext highlighter-rouge">jq</code> lets you filter, slice, and transform JSON directly in shell scripts or command prompts, without needing extra libraries or
+complicated parsing logic. It’s lightweight, powerful, and perfect when you just want to grab specific data or reshape JSON
+structures on-the-fly.</p>
+
+<h2 id="challenges-in-parsing-json-with-pick-basic">Challenges in Parsing JSON with PICK Basic</h2>
+
+<p>Without recursive data objects (e.g. dynamic arrays that contain other dynamic arrays), parsing deeply nested JSON in PICK Basic can
+be challenging - there’s nowhere to “put” the data.</p>
+
+<p>Some existing PICK Basic solutions for parsing JSON show creative approaches to the problem:</p>
+
+<ul>
+  <li>
+    <p><a href="https://www.intl-spectrum.com/Article/r1031/Parsing_JSON_Data_with_jBASE_QM_and_U2">International Spectrum Article</a></p>
+  </li>
+  <li>
+    <p><a href="https://github.com/Krowemoh/TCL-Utilities/blob/main/JSON.PARSE.RECURSE">Krowemoh’s JSON.PARSE.RECURSE</a></p>
+  </li>
+</ul>
+
+<h2 id="a-different-approach-to-json-parsing-in-pick-basic">A Different Approach to JSON Parsing in PICK Basic</h2>
+
+<p>Since the problem is really about how to store the data, we take a different approach. As a developer consuming the data, we will
+typically be drilling down one layer at a time and doing some processing of each layer. So it’s not strictly necessary to have the
+entire parsed JSON structure in memory at once - we can return the first level and any values that are “complex” (objects or
+arrays) we will defer processing those until they are needed.  For example, using the json in the introduction, if we need the names
+of the countries and their capitals, we can do that with the following:</p>
+
+<pre><code class="language-basic">CALL JSON.GET.OBJECT(JSON.STRING, COUNTRY.LIST, ERR)
+</code></pre>
+
+<p>Which will return COUNTRY.LIST as a dynamic array with three attributes:</p>
+<ol>
+  <li>“Countries”</li>
+  <li>“ARRAY”</li>
+  <li>The JSON array of the list of countries “[ {Name: USA….}, {Name: Canada…} ]”</li>
+</ol>
+
+<p>Then we can use the JSON.GET.ARRAY to get the array of countries:</p>
+
+<pre><code class="language-basic">CALL JSON.GET.ARRAY(COUNTRY.LIST&lt;3,1&gt;, COUNTRY.ARRAY, ERR)
+</code></pre>
+
+<p>Which will be a dynamic array (somewhat similar to the <a href="https://jsonlines.org/">JSON Lines</a> format) with two “rows”:</p>
+
+<ol>
+  <li>{ “Name”: “USA”, “Capital”: “Washington, D.C.”, “Population”: 331000000, “Languages”: [“English”, “Spanish”] },</li>
+  <li>{ “Name”: “Canada”, “Capital”: “Ottawa”, “Population”: 38000000, “Languages”: [“English”, “French”] }</li>
+</ol>
+
+<p>Which can be processed in a loop:</p>
+
+<pre><code class="language-basic">FOR I = 1 TO DCOUNT(COUNTRY.ARRAY, @AM)
+  CALL JSON.GET.OBJECT(COUNTRY.ARRAY&lt;I&gt;, COUNTRY.OBJECT, ERR)
+  PRINT "Country: " : COUNTRY.OBJECT&lt;3,1&gt; ;* JSON objects are inserted in the same order as they are in the JSON, we know the index
+  PRINT "Capital: " : COUNTRY.OBJECT&lt;3,2&gt; ;* Can also do a LOCATE "Capital" IN COUNTRY.OBJECT&lt;1&gt; SETTING IDX to get the index
+NEXT I
+</code></pre>
+
+<p>This is not as efficient as using a native JSON parser, but it is simple and effective for most use cases.</p>
+
+<h2 id="applying-test-driven-development-tdd">Applying Test-Driven Development (TDD)</h2>
+
+<p>One nice aspect of this approach is that it is easy to implement TDD or <a href="https://en.wikipedia.org/wiki/Test-driven_development">Test Driven
+Development</a> for the JSON parsing. TDD is something I’ve been wanting to try
+in my development process for a while, but never found a good way to start - most of my development is data load-and-extracts or
+CRUD, where it’s hard to know ahead of time what the expected outcome is. But with JSON parsing, we can easily define a set of test
+cases that have very clear and repeatable outcomes.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">JSON.GET.TEST</code> script is a simple test harness that can be used to validate the JSON parsing. It uses the same JSON.GET
+functions as the main JSON parsing code, but instead of returning the parsed data, it runs through a set of test cases and checks
+the response against the expected outcome.  As bugs or edge cases are discovered, they can be added to the test cases first, then
+run to show that the test is correctly identifying an issue.  Then the code can be modified to fix the issue, and the test can be
+re-run to show that the issue is fixed.  This is a great way to ensure that the code is working as expected.</p>
+
+<p><img src="/assets/images/JSON.GET.TEST.jpg" alt="Test run" /></p>
+
+<p><img src="/assets/images/JSON.GET.TEST2.jpg" alt="Test run" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>In this post, we explored a practical approach to parsing JSON data in PICK Basic. By deferring parsing of complex nested structures
+until they are needed, we can simplify the parsing process and make it more efficient. We also discussed how to apply test-driven
+development (TDD) to JSON parsing, which can help ensure that the code is working as expected and make it easier to identify and fix
+bugs.</p>
 
   </div>
 

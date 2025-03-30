@@ -5,13 +5,170 @@
     <description>A blog about using, exploring and programming InfoLease and legacy systems</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 29 Mar 2025 16:13:52 -0700</pubDate>
-    <lastBuildDate>Sat, 29 Mar 2025 16:13:52 -0700</lastBuildDate>
+    <pubDate>Sat, 29 Mar 2025 18:49:14 -0700</pubDate>
+    <lastBuildDate>Sat, 29 Mar 2025 18:49:14 -0700</lastBuildDate>
     <generator>Jekyll v3.10.0</generator>
     
       <item>
         <title>Parsing JSON data from PICK Basic</title>
-        <description>&lt;p&gt;Content here…&lt;/p&gt;
+        <description>&lt;h1 id=&quot;parsing-json-data-in-pick-basic-an-effective-approach&quot;&gt;Parsing JSON Data in PICK Basic: An Effective Approach&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/JSON_Hero.png&quot; alt=&quot;JSON Hero&quot; /&gt;
+&lt;a href=&quot;https://github.com/ianmcgowan/SIMBIAN.BP/tree/main&quot;&gt;Link to the code on GitHub&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;JSON (JavaScript Object Notation) has become standard for exchanging data between web services, APIs, and configuration files. It
+replaced XML in most modern applications because it’s simpler, more readable, and easier for developers to use. This shift
+highlights a key lesson: developer productivity often beats “better” technology.&lt;/p&gt;
+
+&lt;p&gt;A quick example makes the difference clear. Here’s data represented in JSON:&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Countries&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;USA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Capital&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Washington, D.C.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Population&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;331000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Languages&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;English&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Spanish&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Canada&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Capital&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Ottawa&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Population&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;38000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Languages&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;English&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;French&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and the equivalent XML:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-XML&quot;&gt;&amp;lt;Countries&amp;gt;
+  &amp;lt;Country&amp;gt;
+    &amp;lt;Name&amp;gt;USA&amp;lt;/Name&amp;gt;
+    &amp;lt;Capital&amp;gt;Washington, D.C.&amp;lt;/Capital&amp;gt;
+    &amp;lt;Population&amp;gt;331000000&amp;lt;/Population&amp;gt;
+    &amp;lt;Languages&amp;gt;
+      &amp;lt;Language&amp;gt;English&amp;lt;/Language&amp;gt;
+      &amp;lt;Language&amp;gt;Spanish&amp;lt;/Language&amp;gt;
+    &amp;lt;/Languages&amp;gt;
+  &amp;lt;/Country&amp;gt;
+  &amp;lt;Country&amp;gt;
+    &amp;lt;Name&amp;gt;Canada&amp;lt;/Name&amp;gt;
+    &amp;lt;Capital&amp;gt;Ottawa&amp;lt;/Capital&amp;gt;
+    &amp;lt;Population&amp;gt;38000000&amp;lt;/Population&amp;gt;
+    &amp;lt;Languages&amp;gt;
+      &amp;lt;Language&amp;gt;English&amp;lt;/Language&amp;gt;
+      &amp;lt;Language&amp;gt;French&amp;lt;/Language&amp;gt;
+    &amp;lt;/Languages&amp;gt;
+  &amp;lt;/Country&amp;gt;
+&amp;lt;/Countries&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;JSON’s structure — objects with key-value pairs and arrays — makes nested data straightforward. It lacks XML’s richness and
+extensibility, but the trade-off is worth it for simplicity.&lt;/p&gt;
+
+&lt;p&gt;Multivalued database systems like PICK store data as flat, delimited records — not hierarchies. Without native pointers or objects,
+parsing JSON directly can be tricky. Some modern MV systems like jBASE and OpenQM offer built-in support for objects, but most
+traditional PICK environments don’t.&lt;/p&gt;
+
+&lt;p&gt;So how can PICK developers handle JSON effectively? In this post, I’ll review some existing approaches, discuss the challenges, and
+share a practical method that works smoothly in PICK Basic.&lt;/p&gt;
+
+&lt;h2 id=&quot;common-json-parsing-techniques&quot;&gt;Common JSON Parsing Techniques&lt;/h2&gt;
+
+&lt;p&gt;In mainstream languages like JavaScript, Python, and Java, parsing JSON is straightforward. JavaScript handles JSON natively—just
+use JSON.parse() to quickly convert text into an object. Python’s json module does the heavy lifting, turning JSON strings into
+dictionaries and lists with minimal effort. Java developers typically use libraries such as Jackson or Gson, which map JSON directly
+into objects or classes. These languages offer convenient ways to easily navigate and manipulate JSON data.&lt;/p&gt;
+
+&lt;p&gt;When you’re scripting or working from the command line, tools like &lt;a href=&quot;https://jqlang.org/&quot;&gt;jq&lt;/a&gt; make JSON parsing quick and painless.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jq&lt;/code&gt; lets you filter, slice, and transform JSON directly in shell scripts or command prompts, without needing extra libraries or
+complicated parsing logic. It’s lightweight, powerful, and perfect when you just want to grab specific data or reshape JSON
+structures on-the-fly.&lt;/p&gt;
+
+&lt;h2 id=&quot;challenges-in-parsing-json-with-pick-basic&quot;&gt;Challenges in Parsing JSON with PICK Basic&lt;/h2&gt;
+
+&lt;p&gt;Without recursive data objects (e.g. dynamic arrays that contain other dynamic arrays), parsing deeply nested JSON in PICK Basic can
+be challenging - there’s nowhere to “put” the data.&lt;/p&gt;
+
+&lt;p&gt;Some existing PICK Basic solutions for parsing JSON show creative approaches to the problem:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.intl-spectrum.com/Article/r1031/Parsing_JSON_Data_with_jBASE_QM_and_U2&quot;&gt;International Spectrum Article&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://github.com/Krowemoh/TCL-Utilities/blob/main/JSON.PARSE.RECURSE&quot;&gt;Krowemoh’s JSON.PARSE.RECURSE&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;a-different-approach-to-json-parsing-in-pick-basic&quot;&gt;A Different Approach to JSON Parsing in PICK Basic&lt;/h2&gt;
+
+&lt;p&gt;Since the problem is really about how to store the data, we take a different approach. As a developer consuming the data, we will
+typically be drilling down one layer at a time and doing some processing of each layer. So it’s not strictly necessary to have the
+entire parsed JSON structure in memory at once - we can return the first level and any values that are “complex” (objects or
+arrays) we will defer processing those until they are needed.  For example, using the json in the introduction, if we need the names
+of the countries and their capitals, we can do that with the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-basic&quot;&gt;CALL JSON.GET.OBJECT(JSON.STRING, COUNTRY.LIST, ERR)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Which will return COUNTRY.LIST as a dynamic array with three attributes:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;“Countries”&lt;/li&gt;
+  &lt;li&gt;“ARRAY”&lt;/li&gt;
+  &lt;li&gt;The JSON array of the list of countries “[ {Name: USA….}, {Name: Canada…} ]”&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Then we can use the JSON.GET.ARRAY to get the array of countries:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-basic&quot;&gt;CALL JSON.GET.ARRAY(COUNTRY.LIST&amp;lt;3,1&amp;gt;, COUNTRY.ARRAY, ERR)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Which will be a dynamic array (somewhat similar to the &lt;a href=&quot;https://jsonlines.org/&quot;&gt;JSON Lines&lt;/a&gt; format) with two “rows”:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;{ “Name”: “USA”, “Capital”: “Washington, D.C.”, “Population”: 331000000, “Languages”: [“English”, “Spanish”] },&lt;/li&gt;
+  &lt;li&gt;{ “Name”: “Canada”, “Capital”: “Ottawa”, “Population”: 38000000, “Languages”: [“English”, “French”] }&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Which can be processed in a loop:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-basic&quot;&gt;FOR I = 1 TO DCOUNT(COUNTRY.ARRAY, @AM)
+  CALL JSON.GET.OBJECT(COUNTRY.ARRAY&amp;lt;I&amp;gt;, COUNTRY.OBJECT, ERR)
+  PRINT &quot;Country: &quot; : COUNTRY.OBJECT&amp;lt;3,1&amp;gt; ;* JSON objects are inserted in the same order as they are in the JSON, we know the index
+  PRINT &quot;Capital: &quot; : COUNTRY.OBJECT&amp;lt;3,2&amp;gt; ;* Can also do a LOCATE &quot;Capital&quot; IN COUNTRY.OBJECT&amp;lt;1&amp;gt; SETTING IDX to get the index
+NEXT I
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is not as efficient as using a native JSON parser, but it is simple and effective for most use cases.&lt;/p&gt;
+
+&lt;h2 id=&quot;applying-test-driven-development-tdd&quot;&gt;Applying Test-Driven Development (TDD)&lt;/h2&gt;
+
+&lt;p&gt;One nice aspect of this approach is that it is easy to implement TDD or &lt;a href=&quot;https://en.wikipedia.org/wiki/Test-driven_development&quot;&gt;Test Driven
+Development&lt;/a&gt; for the JSON parsing. TDD is something I’ve been wanting to try
+in my development process for a while, but never found a good way to start - most of my development is data load-and-extracts or
+CRUD, where it’s hard to know ahead of time what the expected outcome is. But with JSON parsing, we can easily define a set of test
+cases that have very clear and repeatable outcomes.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSON.GET.TEST&lt;/code&gt; script is a simple test harness that can be used to validate the JSON parsing. It uses the same JSON.GET
+functions as the main JSON parsing code, but instead of returning the parsed data, it runs through a set of test cases and checks
+the response against the expected outcome.  As bugs or edge cases are discovered, they can be added to the test cases first, then
+run to show that the test is correctly identifying an issue.  Then the code can be modified to fix the issue, and the test can be
+re-run to show that the issue is fixed.  This is a great way to ensure that the code is working as expected.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/JSON.GET.TEST.jpg&quot; alt=&quot;Test run&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/JSON.GET.TEST2.jpg&quot; alt=&quot;Test run&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;In this post, we explored a practical approach to parsing JSON data in PICK Basic. By deferring parsing of complex nested structures
+until they are needed, we can simplify the parsing process and make it more efficient. We also discussed how to apply test-driven
+development (TDD) to JSON parsing, which can help ensure that the code is working as expected and make it easier to identify and fix
+bugs.&lt;/p&gt;
 </description>
         <pubDate>Sat, 29 Mar 2025 00:00:00 -0700</pubDate>
         <link>http://localhost:4000/pick%20basic/2025/03/29/parsing-json-from-pick-basic.html</link>

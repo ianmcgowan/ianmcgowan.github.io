@@ -12,7 +12,7 @@ var store = [{
         "teaser": null
       },{
         "title": "Parsing JSON data from PICK Basic",
-        "excerpt":"Content here…  ","categories": ["PICK Basic"],
+        "excerpt":"Parsing JSON Data in PICK Basic: An Effective Approach Link to the code on GitHub Introduction JSON (JavaScript Object Notation) has become standard for exchanging data between web services, APIs, and configuration files. It replaced XML in most modern applications because it’s simpler, more readable, and easier for developers to...","categories": ["PICK Basic"],
         "tags": ["json","integration","tutorial"],
         "url": "/pick%20basic/2025/03/29/parsing-json-from-pick-basic.html",
         "teaser": null
