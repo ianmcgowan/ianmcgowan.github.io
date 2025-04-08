@@ -73,7 +73,7 @@ parsing JSON directly can be tricky. Some modern MV systems like jBASE and OpenQ
 traditional PICK environments don't.
 
 So how can PICK developers handle JSON effectively? In this post, I'll review some existing approaches, discuss the challenges, and
-share a practical method that works smoothly in PICK Basic.
+share a practical method that works efficiently in PICK Basic.
 
 ## Common JSON Parsing Techniques
 
